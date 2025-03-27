@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../Config/Config.php';
-require_once __DIR__ . '/../models/register_employee_model.php';
+require_once __DIR__ . '/../models/register-employee-model.php';
 
 class RegisterEmployeeController {
     private $model;

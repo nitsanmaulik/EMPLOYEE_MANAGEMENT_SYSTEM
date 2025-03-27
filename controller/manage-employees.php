@@ -2,7 +2,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../Config/Config.php';
-require_once __DIR__ . '/../models/manage_employee_model.php';
+require_once __DIR__ . '/../models/manage-employee-model.php';
 
 // Check admin authentication
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {

@@ -14,7 +14,7 @@
         <div class="container d-flex justify-content-between align-items-center">
             <h2>Employee dashboard</h2>
             <div>
-                <a href="edit_profile.php" class="btn btn-warning">Edit Profile</a>
+                <a href="edit-profile.php" class="btn btn-warning">Edit Profile</a>
                 <button class="btn btn-danger" id="logoutButton">Logout</button>
             </div>
         </div>

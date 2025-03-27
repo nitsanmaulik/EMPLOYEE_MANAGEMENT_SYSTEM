@@ -45,9 +45,9 @@
                             <td><?php echo htmlspecialchars(ucwords(str_replace('_', ' ', $employee['role']))); ?></td>
                             <td>
                                 <div class="d-flex gap-2">
-                                    <a href="edit_employee.php?id=<?php echo $employee['id']; ?>" 
+                                    <a href="edit-employee.php?id=<?php echo $employee['id']; ?>" 
                                        class="btn btn-warning btn-sm">Edit</a>
-                                    <a href="manage_employees.php?delete=<?php echo $employee['id']; ?>" 
+                                    <a href="manage-employees.php?delete=<?php echo $employee['id']; ?>" 
                                        class="btn btn-danger btn-sm"
                                        onclick="return confirm('Are you sure you want to delete this employee?');">
                                         Delete

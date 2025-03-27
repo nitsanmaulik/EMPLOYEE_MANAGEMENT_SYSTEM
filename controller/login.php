@@ -38,13 +38,13 @@ class AuthController {
     private function redirectUser($role) {
         switch ($role) {
             case 'admin':
-                header("Location: admindashboard.php");
+                header("Location: admin-dashboard.php");
                 break;
             case 'team_leader':
-                header("Location: teamLeaderdashboard.php");
+                header("Location: team-leader-dashboard.php");
                 break;
             case 'employee':
-                header("Location: employeedashboard.php");
+                header("Location: employee-dashboard.php");
                 break;
             default:
                 header("Location: ../index.php?error=invalid_role");

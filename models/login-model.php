@@ -1,6 +1,6 @@
 <?php
 
-include("../Config/config.php");
+include("../Config/Config.php");
 
 class User {
     private $conn;
