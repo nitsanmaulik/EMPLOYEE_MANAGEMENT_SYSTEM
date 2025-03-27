@@ -12,7 +12,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <h2>Manage Employees</h2>
-            <a href="admindashboard.php" class="btn btn-secondary">Back to Dashboard</a>
+            <a href="admin-dashboard.php" class="btn btn-secondary">Back to Dashboard</a>
         </div>
     </nav>
 

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require '../Config/config.php';
+require '../Config/Config.php';
 
 class TaskProgressUpdater {
     private $conn;
@@ -52,7 +52,7 @@ try {
     $taskUpdater = new TaskProgressUpdater($conn, $_SESSION['user_id']);
     $taskUpdater->updateTaskStatus($_POST['task_id'], $_POST['status']);
     
-    header("Location: employeedashboard.php?success=Task+Updated");
+    header("Location: employee-dashboard.php?success=Task+Updated");
     exit();
     
 } catch (Exception $e) {

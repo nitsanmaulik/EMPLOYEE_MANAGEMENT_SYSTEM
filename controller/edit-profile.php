@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../Config/config.php';
+include '../Config/Config.php';
 
 // Ensure user is logged in
 if (!isset($_SESSION['user_id'])) {
@@ -62,11 +62,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Redirect based on role
         $redirect_page = "dashboard.php"; // Default dashboard
         if ($role === 'team_leader') {
-            $redirect_page = "teamLeaderdashboard.php";
+            $redirect_page = "team-leader-dashboard.php";
         } elseif ($role === 'admin') {
-            $redirect_page = "admindashboard.php";
+            $redirect_page = "admin-dashboard.php";
         } elseif ($role === 'employee') {
-            $redirect_page = "employeedashboard.php";
+            $redirect_page = "employee-dashboard.php";
         }
         
         header("Location: $redirect_page");
@@ -78,6 +78,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->close();
 }
 $conn->close();
-include '../view/edit_profile_view.php';
+include '../view/edit-profile-view.php';
 ?>
 

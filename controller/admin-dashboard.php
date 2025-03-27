@@ -1,7 +1,7 @@
 <?php
 session_start();
-include("../Config/config.php");
-include("../models/admindashboard_model.php");
+include("../Config/Config.php");
+include("../models/admindashboard-model.php");
 
 // Redirect if admin is not logged in
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['message'] = $success ? 'Task status updated!' : 'Error updating task.';
     }
     
-    header("Location: admindashboard.php");
+    header("Location: admin-dashboard.php");
     exit();
 }
 
@@ -43,5 +43,5 @@ $users = $model->getAllUsers();
 $tasks = $model->getAllTasks();
 
 
-include "../view/admin_dashboard_view.php";
+include "../view/admin-dashboard-view.php";
 ?>

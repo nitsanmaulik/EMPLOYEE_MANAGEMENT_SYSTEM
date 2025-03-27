@@ -1,6 +1,6 @@
 <?php
 session_start();
-require '../Config/config.php';
+require '../Config/Config.php';
 
 class TaskAdminController {
     private $conn;
@@ -61,11 +61,11 @@ class TaskAdminController {
                 (int)$_POST['assigned_to']
             );
             
-            $dashboard = ($_SESSION['role'] === 'admin') ? 'admindashboard.php' : 'teamLeaderdashboard.php';
+            $dashboard = ($_SESSION['role'] === 'admin') ? 'admin-dashboard.php' : 'team-leader-dashboard.php';
             header("Location: $dashboard?success=Task+Updated");
             exit();
         } catch (Exception $e) {
-            header("Location: update_task_admin.php?id=$task_id&error=" . urlencode($e->getMessage()));
+            header("Location: update-task-admin.php?id=$task_id&error=" . urlencode($e->getMessage()));
             exit();
         }
     }
@@ -121,7 +121,7 @@ class TaskAdminController {
     
     private function displayView($data) {
         extract($data);
-        include '../view/update_task_admin_view.php';
+        include '../view/update-task-admin-view.php';
     }
 }
 

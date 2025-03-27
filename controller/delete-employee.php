@@ -1,6 +1,6 @@
 <?php
 session_start();
-require '../Config/config.php';
+require '../Config/Config.php';
 
 class EmployeeDeleter {
     private $conn;
@@ -30,7 +30,7 @@ if (!isset($_GET['id']) || !ctype_digit($_GET['id'])) {
 // Process Deletion
 $deleter = new EmployeeDeleter($conn);
 if ($deleter->delete($_GET['id'])) {
-    header("Location: manage_employees.php?success=Employee+Deleted");
+    header("Location: manage-employees.php?success=Employee+Deleted");
 } else {
     die("Failed to delete employee");
 }

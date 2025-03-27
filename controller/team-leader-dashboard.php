@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once __DIR__ . '/../Config/config.php';
-require_once __DIR__ . '/../models/teamLeader_dashboard_model.php';
+require_once __DIR__ . '/../Config/Config.php';
+require_once __DIR__ . '/../models/teamLeader-dashboard-model.php';
 
 class TeamLeaderController {
     private $model;
@@ -49,7 +49,7 @@ class TeamLeaderController {
         } catch (Exception $e) {
             $_SESSION['error'] = $e->getMessage();
         }
-        header("Location: teamLeaderdashboard.php");
+        header("Location: team-leader-dashboard.php");
         exit();
     }
 
@@ -67,7 +67,7 @@ class TeamLeaderController {
         } catch (Exception $e) {
             $_SESSION['error'] = $e->getMessage();
         }
-        header("Location: teamLeaderdashboard.php");
+        header("Location: team-leader-dashboard.php");
         exit();
     }
 
@@ -86,7 +86,7 @@ class TeamLeaderController {
         } catch (Exception $e) {
             $_SESSION['error'] = $e->getMessage();
         }
-        header("Location: teamLeaderdashboard.php");
+        header("Location: team-leader-dashboard.php");
         exit();
     }
 
@@ -106,7 +106,7 @@ class TeamLeaderController {
         ];
 
         unset($_SESSION['message'], $_SESSION['error']);
-        require_once __DIR__ . '/../view/teamLeader_dashboard_view.php';
+        require_once __DIR__ . '/../view/teamLeader-dashboard-view.php';
     }
 }
 

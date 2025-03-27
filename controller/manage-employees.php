@@ -1,7 +1,7 @@
 
 <?php
 session_start();
-require_once __DIR__ . '/../Config/config.php';
+require_once __DIR__ . '/../Config/Config.php';
 require_once __DIR__ . '/../models/manage_employee_model.php';
 
 // Check admin authentication
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         $success = $model->updateEmployee($id, $data);
         $_SESSION['message'] = $success ? 'Employee updated successfully!' : 'Error updating employee.';
-        header("Location: manage_employees.php");
+        header("Location: manage-employees.php");
         exit();
     }
 }
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 if (isset($_GET['delete'])) {
     $success = $model->deleteEmployee($_GET['delete']);
     $_SESSION['message'] = $success ? 'Employee deleted successfully!' : 'Error deleting employee.';
-    header("Location: manage_employees.php");
+    header("Location: manage-employees.php");
     exit();
 }
 
@@ -42,6 +42,6 @@ if (isset($_GET['delete'])) {
 $employees = $model->getAllEmployees();
 
 
-include '../view/manage_employees_view.php';
+include '../view/manage-employees-view.php';
 ?>
 

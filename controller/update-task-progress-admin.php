@@ -1,6 +1,6 @@
 <?php
 session_start();
-require '../Config/config.php';
+require '../Config/Config.php';
 
 class TaskProgressUpdater {
     private $conn;
@@ -35,7 +35,7 @@ class TaskProgressUpdater {
 
 // Authentication check
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['name'])) {
-    header("Location: admin_login.php");
+    header("Location: ../index.php");
     exit();
 }
 
@@ -52,7 +52,7 @@ try {
     $taskUpdater = new TaskProgressUpdater($conn, $_SESSION['user_id']);
     $taskUpdater->updateTaskStatus($_POST['task_id'], $_POST['status']);
     
-    header("Location: admindashboard.php?success=Task+Updated");
+    header("Location: admin-dashboard.php?success=Task+Updated");
     exit();
     
 } catch (Exception $e) {

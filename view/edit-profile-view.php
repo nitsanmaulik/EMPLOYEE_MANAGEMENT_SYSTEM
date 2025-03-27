@@ -8,7 +8,7 @@
 <body>
     <div class="container mt-5">
         <h2 class="text-center">Edit Profile</h2>
-        <form action="edit_profile.php" method="POST" enctype="multipart/form-data">
+        <form action="edit-profile.php" method="POST" enctype="multipart/form-data">
             <div class="mb-3">
                 <label class="form-label">Full Name</label>
                 <input type="text" class="form-control" name="name" value="<?php echo htmlspecialchars($user['name']); ?>">
@@ -40,11 +40,11 @@
             <button type="submit" class="btn btn-primary w-100">Update Profile</button>
             <a href="<?php 
                 if ($role === 'team_leader') {
-                    echo 'teamLeaderdashboard.php';
+                    echo 'team-leader-dashboard.php';
                 } elseif ($role === 'admin') {
-                    echo 'admindashboard.php';
+                    echo 'admin-dashboard.php';
                 } else {
-                    echo 'employeedashboard.php';
+                    echo 'employee-dashboard.php';
                 }
             ?>" class="btn btn-secondary w-100 mt-2">Cancel</a>
         </form>

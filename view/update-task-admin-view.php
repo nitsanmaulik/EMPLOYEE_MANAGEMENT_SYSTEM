@@ -10,7 +10,7 @@
         <h2 class="text-center">Edit Task (Admin)</h2>
         
         
-        <form action="update_task_admin.php" method="POST">
+        <form action="update-task-admin.php" method="POST">
             <input type="hidden" name="task_id" value="<?php echo htmlspecialchars($task_id); ?>">
 
             <div class="mb-3">
@@ -36,7 +36,7 @@
 
             <button type="submit" class="btn btn-primary w-100">Update Task</button>
             <?php 
-                $dashboard = ($_SESSION['role'] === 'admin') ? 'admindashboard.php' : 'teamLeaderdashboard.php';
+                $dashboard = ($_SESSION['role'] === 'admin') ? 'admin-dashboard.php' : 'team-leader-dashboard.php';
             ?>
             <a href="<?php echo $dashboard; ?>" class="btn btn-secondary w-100 mt-2">Cancel</a>
         </form>

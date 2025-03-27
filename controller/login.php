@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include("../models/login_model.php");
+include("../models/login-model.php");
 
 class AuthController {
     private $userModel;

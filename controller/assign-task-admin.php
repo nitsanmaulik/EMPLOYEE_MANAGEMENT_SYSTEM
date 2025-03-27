@@ -1,26 +1,26 @@
 <?php
 session_start();
-require_once __DIR__ . '/../Config/config.php';
-require_once __DIR__ . '/../models/assign_task_admin_model.php';
+require_once __DIR__ . '/../Config/Config.php';
+require_once __DIR__ . '/../models/assign-task-admin-model.php';
 
 class TaskController {
     private $model;
     private $assignedBy;
     private $role;
 
-    public function __construct($model, $userId, $userRole) {
+    public function __construct ($model, $userId, $userRole) {
         $this->model = $model;
         $this->assignedBy = $userId;
         $this->role = $userRole;
     }
 
-    public function handleRequest() {
+    public function handleRequest () {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $this->handlePostRequest();
         }
     }
 
-    private function handlePostRequest() {
+    private function handlePostRequest () {
         try {
             $this->model->assignTask(
                 trim($_POST['title']),
@@ -37,8 +37,8 @@ class TaskController {
         }
     }
 
-    private function redirect() {
-        $url = $this->role === 'admin' ? "admindashboard.php" : "teamLeaderdashboard.php";
+    private function redirect () {
+        $url = $this->role === 'admin' ? "admin-dashboard.php" : "team-leader-dashboard.php";
         header("Location: $url");
         exit();
     }

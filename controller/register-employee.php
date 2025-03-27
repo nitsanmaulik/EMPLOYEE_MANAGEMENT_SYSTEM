@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../Config/config.php';
+require_once __DIR__ . '/../Config/Config.php';
 require_once __DIR__ . '/../models/register_employee_model.php';
 
 class RegisterEmployeeController {
@@ -24,11 +24,11 @@ class RegisterEmployeeController {
 
             $this->model->registerEmployee($_POST, $_FILES['photo'] ?? null);
             $_SESSION['success_message'] = "Employee registered successfully!";
-            header('Location: admindashboard.php');
+            header('Location: admin-dashboard.php');
             exit();
         } catch (Exception $e) {
             $_SESSION['error_message'] = $e->getMessage();
-            header('Location: admindashboard.php'); // Redirect back to form
+            header('Location: admin-dashboard.php'); // Redirect back to form
             exit();
         }
     }

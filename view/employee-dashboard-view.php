@@ -46,7 +46,7 @@
                                 </span>
                             </td>
                             <td>
-                            <form action="update_task_progress.php" method="POST">
+                            <form action="update-task-progress.php" method="POST">
                                 <input type="hidden" name="task_id" value="<?php echo $task['id']; ?>">
                                 <select name="status" class="form-select">
                                     <option value="pending" <?php echo ($task['status'] == 'pending') ? 'selected' : ''; ?>>Pending</option>
