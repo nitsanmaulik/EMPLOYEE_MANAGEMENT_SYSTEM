@@ -1,7 +1,6 @@
 <?php
-session_start(); // Add this at the very top
+session_start();
 
-//require_once __DIR__ . '/../models/login_model.php';
 include("../models/login_model.php");
 
 class AuthController {

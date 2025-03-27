@@ -32,7 +32,7 @@ class TaskAdminController {
             exit();
         }
         
-        // Allow both admin and team_leader
+        
         if ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'team_leader') {
             header("Location: ../index.php");
             exit();
@@ -61,7 +61,6 @@ class TaskAdminController {
                 (int)$_POST['assigned_to']
             );
             
-            // Redirect to appropriate dashboard based on role
             $dashboard = ($_SESSION['role'] === 'admin') ? 'admindashboard.php' : 'teamLeaderdashboard.php';
             header("Location: $dashboard?success=Task+Updated");
             exit();
@@ -104,7 +103,7 @@ class TaskAdminController {
     }
     
     private function getAssignableUsers() {
-        // For team leaders, show all employees
+        
         if ($_SESSION['role'] === 'team_leader') {
             $stmt = $this->conn->prepare(
                 "SELECT id, name FROM users WHERE role = 'employee'"
@@ -113,7 +112,7 @@ class TaskAdminController {
             return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         }
         
-        // For admins, show all employees and team leaders
+        
         $result = $this->conn->query(
             "SELECT id, name FROM users WHERE role IN ('employee', 'team_leader')"
         );
