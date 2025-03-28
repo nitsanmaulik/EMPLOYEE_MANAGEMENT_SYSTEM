@@ -1,62 +1,60 @@
 <?php
 session_start();
 require '../Config/Config.php';
+require '../models/update-task-progress-admin.php';
 
-class TaskProgressUpdater {
-    private $conn;
-    private $adminId;
-
-    public function __construct($conn, $adminId) {
-        $this->conn = $conn;
-        $this->adminId = $adminId;
-    }
-
-    public function updateTaskStatus($taskId, $status) {
-        $this->validateInput($taskId, $status);
-        
-        $stmt = $this->conn->prepare("UPDATE tasks SET status = ? WHERE id = ?");
-        $stmt->bind_param("si", $status, $taskId);
-        
-        if (!$stmt->execute()) {
-            throw new Exception("Database error: " . $stmt->error);
-        }
-        
-        return true;
-    }
-
-    private function validateInput($taskId, $status) {
-        
-        $allowedStatuses = ['pending', 'in_progress', 'completed'];
-        if (!in_array($status, $allowedStatuses)) {
-            throw new Exception("Invalid status value");
-        }
-    }
-}
-
-// Authentication check
-if (!isset($_SESSION['user_id']) || !isset($_SESSION['name'])) {
-    header("Location: ../index.php");
-    exit();
-}
-
-// Main execution
-try {
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        throw new Exception("Invalid request method");
-    }
-
-    if (!isset($_POST['task_id']) || !isset($_POST['status'])) {
-        throw new Exception("Missing task details");
-    }
-
-    $taskUpdater = new TaskProgressUpdater($conn, $_SESSION['user_id']);
-    $taskUpdater->updateTaskStatus($_POST['task_id'], $_POST['status']);
+class TaskProgressController {
+    private $model;
     
-    header("Location: admin-dashboard.php?success=Task+Updated");
-    exit();
+    public function __construct($conn) {
+        $this->model = new TaskProgressModel($conn);
+    }
     
-} catch (Exception $e) {
-    die("Error: " . $e->getMessage());
+    public function handleRequest() {
+        $this->checkAuthentication();
+        
+        try {
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                throw new Exception("Invalid request method");
+            }
+
+            $this->validatePostData();
+            
+            $taskId = $_POST['task_id'];
+            $status = $_POST['status'];
+            
+            $this->model->updateTaskStatus($taskId, $status);
+            
+            $this->redirectWithSuccess();
+            
+        } catch (Exception $e) {
+            $this->handleError($e);
+        }
+    }
+    
+    private function checkAuthentication() {
+        if (!isset($_SESSION['user_id']) || !isset($_SESSION['name'])) {
+            header("Location: ../index.php");
+            exit();
+        }
+    }
+    
+    private function validatePostData() {
+        if (!isset($_POST['task_id']) || !isset($_POST['status'])) {
+            throw new Exception("Missing task details");
+        }
+    }
+    
+    private function redirectWithSuccess() {
+        header("Location: admin-dashboard.php?success=Task+Updated");
+        exit();
+    }
+    
+    private function handleError(Exception $e) {
+        die("Error: " . $e->getMessage());
+    }
 }
 
+$controller = new TaskProgressController($conn);
+$controller->handleRequest();
 ?>

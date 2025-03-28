@@ -1,12 +1,13 @@
 <?php
 session_start();
 require '../Config/Config.php';
+require '../models/update-task-admin-model.php';
 
 class TaskAdminController {
-    private $conn;
+    private $model;
     
     public function __construct($conn) {
-        $this->conn = $conn;
+        $this->model = new TaskAdminModel($conn);
     }
     
     public function handleRequest() {
@@ -18,8 +19,8 @@ class TaskAdminController {
         }
         
         $data = [
-            'task' => $this->getTask($task_id),
-            'users' => $this->getAssignableUsers(),
+            'task' => $this->model->getTask($task_id),
+            'users' => $this->model->getAssignableUsers($_SESSION['role']),
             'task_id' => $task_id
         ];
         
@@ -31,7 +32,6 @@ class TaskAdminController {
             header("Location: ../index.php");
             exit();
         }
-        
         
         if ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'team_leader') {
             header("Location: ../index.php");
@@ -54,7 +54,7 @@ class TaskAdminController {
                 throw new Exception("All fields are required");
             }
             
-            $this->updateTask(
+            $this->model->updateTask(
                 $task_id,
                 trim($_POST['title']),
                 trim($_POST['description']),
@@ -68,55 +68,6 @@ class TaskAdminController {
             header("Location: update-task-admin.php?id=$task_id&error=" . urlencode($e->getMessage()));
             exit();
         }
-    }
-    
-    private function updateTask($task_id, $title, $description, $assigned_to) {
-        // Verify user exists
-        $user_check = $this->conn->prepare("SELECT id FROM users WHERE id=?");
-        $user_check->bind_param("i", $assigned_to);
-        $user_check->execute();
-        
-        if ($user_check->get_result()->num_rows === 0) {
-            throw new Exception("Selected user does not exist");
-        }
-        
-        $stmt = $this->conn->prepare("UPDATE tasks SET title=?, description=?, assigned_to=? WHERE id=?");
-        $stmt->bind_param("ssii", $title, $description, $assigned_to, $task_id);
-        
-        if (!$stmt->execute()) {
-            throw new Exception("Database error: " . $stmt->error);
-        }
-    }
-    
-    private function getTask($task_id) {
-        $stmt = $this->conn->prepare("SELECT title, description, assigned_to FROM tasks WHERE id=?");
-        $stmt->bind_param("i", $task_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $task = $result->fetch_assoc();
-        
-        if (!$task) {
-            throw new Exception("Task not found");
-        }
-        
-        return $task;
-    }
-    
-    private function getAssignableUsers() {
-        
-        if ($_SESSION['role'] === 'team_leader') {
-            $stmt = $this->conn->prepare(
-                "SELECT id, name FROM users WHERE role = 'employee'"
-            );
-            $stmt->execute();
-            return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-        }
-        
-        
-        $result = $this->conn->query(
-            "SELECT id, name FROM users WHERE role IN ('employee', 'team_leader')"
-        );
-        return $result->fetch_all(MYSQLI_ASSOC);
     }
     
     private function displayView($data) {

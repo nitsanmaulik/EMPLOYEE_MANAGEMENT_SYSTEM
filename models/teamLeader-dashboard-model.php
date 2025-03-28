@@ -68,7 +68,7 @@ class TeamLeaderModel {
         $stmt->execute();
         
         if ($stmt->get_result()->num_rows === 0) {
-            return false; // Task doesn't exist or wasn't assigned by this leader
+            return false; 
         }
     
         // Delete the task
