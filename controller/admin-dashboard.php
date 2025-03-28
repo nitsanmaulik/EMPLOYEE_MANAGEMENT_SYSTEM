@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 if (isset($_GET['delete_task'])) {
     $success = $model->deleteTask($_GET['delete_task']);
     $_SESSION['message'] = $success ? 'Task deleted successfully!' : 'Error deleting task.';
-    header("Location: admindashboard.php");
+    header("Location: admin-dashboard.php");
     exit();
 }
 

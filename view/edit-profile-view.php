@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="container mt-5">
+    <div class="container mt-2">
         <h2 class="text-center">Edit Profile</h2>
         <form action="edit-profile.php" method="POST" enctype="multipart/form-data">
             <div class="mb-3">

@@ -1,34 +1,29 @@
 <?php
 session_start();
-include '../Config/Config.php';
+require_once '../Config/Config.php';
+require_once '../models/edit-profile-model.php';
 
-// Ensure user is logged in
+// Check authentication
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../index.php");
     exit();
 }
 
+$userModel = new UserModel($conn);
 $user_id = $_SESSION['user_id'];
 $role = $_SESSION['role'];
-
-// Fetch user details
-$stmt = $conn->prepare("SELECT name, email, phone, qualification, photo FROM users WHERE id = ?");
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
-$user = $result->fetch_assoc();
-$stmt->close();
-
+$user = $userModel->getUserById($user_id);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Sanitize inputs
     $name = trim($_POST['name']);
     $email = trim($_POST['email']);
     $phone = trim($_POST['phone']);
     $qualification = trim($_POST['qualification']);
-    $photo = $user['photo']; // Keep existing photo by default
+    $photo = $user['photo']; // Default to existing photo
     $new_password = trim($_POST['password']);
 
-    // Handle File Upload
+    // Handle file upload
     if (!empty($_FILES['photo']['name'])) {
         $upload_dir = "../Assets/Images/";
         $photo_name = time() . "_" . basename($_FILES['photo']['name']);
@@ -36,48 +31,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (move_uploaded_file($_FILES['photo']['tmp_name'], $photo_path)) {
             $photo = $photo_path;
-            // Delete old photo if it exists and isn't the default
+            // Delete old photo if it exists and isn't default
             if (!empty($user['photo']) && strpos($user['photo'], 'default_profile.jpg') === false) {
                 @unlink($user['photo']);
             }
-        } else {
-            echo "Error uploading file.";
         }
     }
 
-    // Update Query (With Password Update if Provided)
+    // Update user data
     if (!empty($new_password)) {
-        $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
-        $stmt = $conn->prepare("UPDATE users SET name = ?, email = ?, phone = ?, qualification = ?, photo = ?, password = ? WHERE id = ?");
-        $stmt->bind_param("ssssssi", $name, $email, $phone, $qualification, $photo, $hashed_password, $user_id);
+        $success = $userModel->updateUserWithPassword($user_id, $name, $email, $phone, $qualification, $photo, $new_password);
     } else {
-        $stmt = $conn->prepare("UPDATE users SET name = ?, email = ?, phone = ?, qualification = ?, photo = ? WHERE id = ?");
-        $stmt->bind_param("sssssi", $name, $email, $phone, $qualification, $photo, $user_id);
+        $success = $userModel->updateUserWithoutPassword($user_id, $name, $email, $phone, $qualification, $photo);
     }
 
-    if ($stmt->execute()) {
+    if ($success) {
         $_SESSION['name'] = $name;
         $_SESSION['photo'] = $photo;
         
-        // Redirect based on role
-        $redirect_page = "dashboard.php"; // Default dashboard
-        if ($role === 'team_leader') {
-            $redirect_page = "team-leader-dashboard.php";
-        } elseif ($role === 'admin') {
-            $redirect_page = "admin-dashboard.php";
-        } elseif ($role === 'employee') {
-            $redirect_page = "employee-dashboard.php";
+        // Determine redirect based on role
+        $redirect_page = "dashboard.php";
+        switch ($role) {
+            case 'team_leader':
+                $redirect_page = "team-leader-dashboard.php";
+                break;
+            case 'admin':
+                $redirect_page = "admin-dashboard.php";
+                break;
+            case 'employee':
+                $redirect_page = "employee-dashboard.php";
+                break;
         }
         
         header("Location: $redirect_page");
         exit();
     } else {
-        echo "Error updating profile: " . $stmt->error;
+        $error = "Error updating profile";
     }
-
-    $stmt->close();
 }
-$conn->close();
-include '../view/edit-profile-view.php';
-?>
 
+$userModel->closeConnection();
+require_once '../view/edit-profile-view.php';
+?>
