@@ -16,7 +16,8 @@ $model = new AdminDashboardModel($conn);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['title']) && isset($_POST['description']) && isset($_POST['assigned_to'])) {
         // Assign new task
-        $success = $model->assignTask( $_POST['title'],$_POST['description'],$_POST['assigned_to'],
+        $success = $model->assignTask( $_POST['title'],
+        $_POST['description'],$_POST['assigned_to'],
             $_SESSION['user_id']
         );
         $_SESSION['message'] = $success ? 'Task assigned successfully!' : 'Error assigning task.';
