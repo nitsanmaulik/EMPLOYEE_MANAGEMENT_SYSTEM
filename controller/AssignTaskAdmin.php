@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../Config/Config.php';
-require_once __DIR__ . '/../models/assign-task-admin-model.php';
+require_once __DIR__ . '/../models/AssignTaskAdminModel.php';
 
 class TaskController {
     private $model;
@@ -51,7 +51,7 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
 }
 
 
-$taskModel = new TaskModel($conn);
+$taskModel = new AssignTaskAdminModel($conn);
 $controller = new TaskController($taskModel, $_SESSION['user_id'], $_SESSION['role']);
 $controller->handleRequest();
 

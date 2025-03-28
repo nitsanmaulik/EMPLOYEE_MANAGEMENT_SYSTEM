@@ -1,5 +1,5 @@
 <?php
-class TaskModel {
+class AssignTaskAdminModel {
     private $conn;
 
     public function __construct($connection) {

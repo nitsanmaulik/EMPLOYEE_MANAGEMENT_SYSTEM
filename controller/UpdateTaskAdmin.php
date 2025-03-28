@@ -1,13 +1,13 @@
 <?php
 session_start();
 require '../Config/Config.php';
-require '../models/update-task-admin-model.php';
+require '../models/UpdateTaskAdminModel.php';
 
 class TaskAdminController {
     private $model;
     
     public function __construct($conn) {
-        $this->model = new TaskAdminModel($conn);
+        $this->model = new UpdateTaskAdminModel($conn);
     }
     
     public function handleRequest() {

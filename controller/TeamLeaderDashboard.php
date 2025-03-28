@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../Config/Config.php';
-require_once __DIR__ . '/../models/teamLeader-dashboard-model.php';
+require_once __DIR__ . '/../models/TeamLeaderDashboardModel.php';
 
 class TeamLeaderController {
     private $model;
@@ -111,7 +111,7 @@ class TeamLeaderController {
 }
 
 // Instantiate and run the controller
-$model = new TeamLeaderModel($conn);
+$model = new TeamLeaderDashboardModel($conn);
 $controller = new TeamLeaderController($model);
 $controller->handleRequest();
 

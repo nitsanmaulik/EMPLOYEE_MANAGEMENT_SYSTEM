@@ -1,13 +1,13 @@
 <?php
 session_start();
 require '../Config/Config.php';
-require '../models/update-task-progress-admin.php';
+require '../models/UpdateTaskProgressAdmin.php';
 
 class TaskProgressController {
     private $model;
     
     public function __construct($conn) {
-        $this->model = new TaskProgressModel($conn);
+        $this->model = new UpdateTaskProgressAdmin($conn);
     }
     
     public function handleRequest() {

@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once '../Config/Config.php';
-require_once '../models/edit-profile-model.php';
+require_once '../models/EditProfileModel.php';
 
 // Check authentication
 if (!isset($_SESSION['user_id'])) {
@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-$userModel = new UserModel($conn);
+$userModel = new EditProfileModel($conn);
 $user_id = $_SESSION['user_id'];
 $role = $_SESSION['role'];
 $user = $userModel->getUserById($user_id);

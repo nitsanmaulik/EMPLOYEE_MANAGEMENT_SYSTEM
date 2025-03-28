@@ -1,7 +1,7 @@
 <?php
 session_start();
 include("../Config/Config.php");
-include("../models/admindashboard-model.php");
+include("../models/AdminDashboardModel.php");
 
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {

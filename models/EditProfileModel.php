@@ -1,5 +1,5 @@
 <?php
-class UserModel {
+class EditProfileModel {
     private $conn;
 
     public function __construct($conn) {

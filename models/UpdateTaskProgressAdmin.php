@@ -1,5 +1,5 @@
 <?php
-class TaskProgressModel {
+class UpdateTaskProgressAdmin {
     private $conn;
     private $allowedStatuses = ['pending', 'in_progress', 'completed'];
     

@@ -1,5 +1,5 @@
 <?php
-class TeamLeaderModel {
+class TeamLeaderDashboardModel {
     private $conn;
 
     public function __construct($connection) {

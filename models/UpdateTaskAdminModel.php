@@ -1,5 +1,5 @@
 <?php
-class TaskAdminModel {
+class UpdateTaskAdminModel {
     private $conn;
     
     public function __construct($conn) {

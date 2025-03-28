@@ -1,5 +1,5 @@
 <?php
-class EmployeeModel {
+class ManageEmployeeModel {
     private $conn;
 
     public function __construct($connection) {

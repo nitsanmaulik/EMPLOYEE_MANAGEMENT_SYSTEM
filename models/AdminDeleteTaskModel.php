@@ -1,5 +1,5 @@
 <?php
-class TaskModel {
+class AdminDeleteTaskModel {
     private $conn;
     
     public function __construct($conn) {
