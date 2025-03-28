@@ -12,7 +12,7 @@
         <div class="container d-flex justify-content-between align-items-center">
             <h2>Team Leader Dashboard</h2>
             <div>
-                <a href="edit-profile.php" class="btn btn-warning me-2">Edit Profile</a>
+                <a href="EditProfile.php" class="btn btn-warning me-2">Edit Profile</a>
                 <button type="button" class="btn btn-info me-2" data-bs-toggle="modal" data-bs-target="#myTasksModal">
                     My Tasks
                 </button>
@@ -32,7 +32,7 @@
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <h4 class="card-title text-center mb-4">Assign Task</h4>
-                        <form action="team-leader-dashboard.php" method="POST">
+                        <form action="TeamLeaderDashboard.php" method="POST">
                             <div class="mb-3">
                                 <label class="form-label">Task Title</label>
                                 <input type="text" class="form-control" name="title" required>
@@ -92,7 +92,7 @@
                                                     <div class="d-flex gap-2">
                                                         <a href="update-task-admin.php?id=<?php echo $task['id']; ?>" 
                                                            class="btn btn-warning btn-sm">Edit</a>
-                                                        <form action="team-leader-dashboard.php" method="POST" class="d-inline">
+                                                        <form action="TeamLeaderDashboard.php" method="POST" class="d-inline">
                                                             <input type="hidden" name="delete_task" value="<?php echo $task['id']; ?>">
                                                             <button type="submit" class="btn btn-danger btn-sm" 
                                                                     onclick="return confirm('Are you sure you want to delete this task?');">
@@ -144,7 +144,7 @@
                                             </span>
                                         </td>
                                         <td>
-                                            <form action="team-leader-dashboard.php" method="POST">
+                                            <form action="TeamLeaderDashboard.php" method="POST">
                                                 <input type="hidden" name="task_id" value="<?php echo $task['id']; ?>">
                                                 <div class="d-flex gap-2">
                                                     <select name="status" class="form-select">

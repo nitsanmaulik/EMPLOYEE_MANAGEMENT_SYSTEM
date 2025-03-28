@@ -10,7 +10,7 @@
         <h2 class="text-center">Edit Task (Admin)</h2>
         
         
-        <form action="update-task-admin.php" method="POST">
+        <form action="UpdateTaskAdmin.php" method="POST">
             <input type="hidden" name="task_id" value="<?php echo htmlspecialchars($task_id); ?>">
 
             <div class="mb-3">

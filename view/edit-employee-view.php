@@ -10,7 +10,7 @@
 <body>
     <div class="container mt-5">
         <h2 class="mb-4 text-center">Edit Employee</h2>
-        <form action="manage-employees.php" method="POST">
+        <form action="ManageEmployees.php" method="POST">
             <input type="hidden" name="id" value="<?php echo $employee['id']; ?>">
             
             <div class="mb-3">
@@ -42,7 +42,7 @@
             </div>
             
             <button type="submit" name="update_employee" class="btn btn-primary w-100">Update Employee</button>
-            <a href="manage-employees.php" class="btn btn-secondary w-100 mt-3">Cancel</a>
+            <a href="ManageEmployees.php" class="btn btn-secondary w-100 mt-3">Cancel</a>
         </form>
     </div>
 </body>

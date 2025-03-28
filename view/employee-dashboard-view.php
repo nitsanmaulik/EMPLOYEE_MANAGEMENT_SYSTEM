@@ -14,7 +14,7 @@
         <div class="container d-flex justify-content-between align-items-center">
             <h2>Employee dashboard</h2>
             <div>
-                <a href="edit-profile.php" class="btn btn-warning">Edit Profile</a>
+                <a href="EditProfile.php" class="btn btn-warning">Edit Profile</a>
                 <button class="btn btn-danger" id="logoutButton">Logout</button>
             </div>
         </div>
@@ -46,7 +46,7 @@
                                 </span>
                             </td>
                             <td>
-                            <form action="update-task-progress.php" method="POST">
+                            <form action="UpdateTaskProgress.php" method="POST">
                                 <input type="hidden" name="task_id" value="<?php echo $task['id']; ?>">
                                 <select name="status" class="form-select">
                                     <option value="pending" <?php echo ($task['status'] == 'pending') ? 'selected' : ''; ?>>Pending</option>

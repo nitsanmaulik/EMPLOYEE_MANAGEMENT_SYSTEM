@@ -12,7 +12,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <h2>Manage Employees</h2>
-            <a href="admin-dashboard.php" class="btn btn-secondary">Back to Dashboard</a>
+            <a href="AdminDashboard.php" class="btn btn-secondary">Back to Dashboard</a>
         </div>
     </nav>
 
@@ -45,9 +45,9 @@
                             <td><?php echo htmlspecialchars(ucwords(str_replace('_', ' ', $employee['role']))); ?></td>
                             <td>
                                 <div class="d-flex gap-2">
-                                    <a href="edit-employee.php?id=<?php echo $employee['id']; ?>" 
+                                    <a href="EditEmployee.php?id=<?php echo $employee['id']; ?>" 
                                        class="btn btn-warning btn-sm">Edit</a>
-                                    <a href="manage-employees.php?delete=<?php echo $employee['id']; ?>" 
+                                    <a href="ManageEmployees.php?delete=<?php echo $employee['id']; ?>" 
                                        class="btn btn-danger btn-sm"
                                        onclick="return confirm('Are you sure you want to delete this employee?');">
                                         Delete

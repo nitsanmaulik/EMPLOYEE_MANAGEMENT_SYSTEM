@@ -12,8 +12,8 @@
         <div class="container">
         <h2>Admin Dashboard</h2>
             <div>
-                <a href="manage-employees.php" class="btn btn-info me-2">Manage Employees</a>
-                <a href="edit-profile.php" class="btn btn-info me-2">Edit Profile</a>
+                <a href="ManageEmployees.php" class="btn btn-info me-2">Manage Employees</a>
+                <a href="EditProfile.php" class="btn btn-info me-2">Edit Profile</a>
                 <button class="btn btn-danger" id="logoutButton">Logout</button>
             </div>
         </div>
@@ -33,7 +33,7 @@
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <h4 class="card-title text-center mb-4">Assign Task</h4>
-                        <form action="admin-dashboard.php" method="POST">
+                        <form action="AdminDashboard.php" method="POST">
                             <div class="mb-3">
                                 <label class="form-label">Task Title</label>
                                 <input type="text" class="form-control" name="title" required>
@@ -62,7 +62,7 @@
             <div class="col-md-6">
                 <div class="card p-4">
                     <h4 class="text-center">Add New Employee</h4>
-                    <form id="registerEmployeeForm" action="register-employee.php" method="POST" enctype="multipart/form-data">
+                    <form id="registerEmployeeForm" action="RegisterEmployee.php" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label class="form-label">Full Name</label>
                             <input type="text" class="form-control" name="name" id="name">
@@ -144,7 +144,7 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <form action="update-task-progress-admin.php" method="POST" class="d-flex">
+                                    <form action="UpdateTaskProgressAdmin.php" method="POST" class="d-flex">
                                         <input type="hidden" name="task_id" value="<?php echo $task['id']; ?>">
                                         <select name="status" class="form-select me-2">
                                             <option value="pending" <?php echo ($task['status'] == 'pending') ? 'selected' : ''; ?>>Pending</option>
@@ -156,8 +156,8 @@
                                 </td>
                                 <td>
                                     <div class="d-flex gap-2">
-                                        <a href="update-task-admin.php?id=<?php echo $task['id']; ?>" class="btn btn-sm btn-warning">Edit</a>
-                                        <a href="admin-dashboard.php?delete_task=<?php echo $task['id']; ?>" 
+                                        <a href="UpdateTaskAdmin.php?id=<?php echo $task['id']; ?>" class="btn btn-sm btn-warning">Edit</a>
+                                        <a href="AdminDashboard.php?delete_task=<?php echo $task['id']; ?>" 
                                            class="btn btn-sm btn-danger" 
                                            onclick="return confirm('Are you sure you want to delete this task?');">
                                             Delete

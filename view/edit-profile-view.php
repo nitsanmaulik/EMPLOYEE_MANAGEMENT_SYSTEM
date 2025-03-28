@@ -8,7 +8,7 @@
 <body>
     <div class="container mt-2">
         <h2 class="text-center">Edit Profile</h2>
-        <form action="edit-profile.php" method="POST" enctype="multipart/form-data">
+        <form action="EditProfile.php" method="POST" enctype="multipart/form-data">
             <div class="mb-3">
                 <label class="form-label">Full Name</label>
                 <input type="text" class="form-control" name="name" value="<?php echo htmlspecialchars($user['name']); ?>">
