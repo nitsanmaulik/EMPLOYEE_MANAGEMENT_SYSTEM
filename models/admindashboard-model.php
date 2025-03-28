@@ -3,9 +3,6 @@ class AdminDashboardModel {
     private $conn;
 
     public function __construct($connection) {
-        if (!$connection) {
-            throw new Exception("Database connection is required");
-        }
         $this->conn = $connection;
     }
 

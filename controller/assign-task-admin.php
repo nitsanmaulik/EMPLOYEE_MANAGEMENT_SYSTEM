@@ -46,16 +46,15 @@ class TaskController {
 
 // Authentication check
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
-    $_SESSION['error'] = "Unauthorized access";
     header("Location: ../index.php");
     exit();
 }
 
-// Initialize and process
+
 $taskModel = new TaskModel($conn);
 $controller = new TaskController($taskModel, $_SESSION['user_id'], $_SESSION['role']);
 $controller->handleRequest();
 
-// Close connection
+
 $conn->close();
 ?>

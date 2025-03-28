@@ -15,15 +15,14 @@ $role = $_SESSION['role'];
 $user = $userModel->getUserById($user_id);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Sanitize inputs
     $name = trim($_POST['name']);
     $email = trim($_POST['email']);
     $phone = trim($_POST['phone']);
     $qualification = trim($_POST['qualification']);
-    $photo = $user['photo']; // Default to existing photo
+    $photo = $user['photo']; 
     $new_password = trim($_POST['password']);
 
-    // Handle file upload
+    
     if (!empty($_FILES['photo']['name'])) {
         $upload_dir = "../Assets/Images/";
         $photo_name = time() . "_" . basename($_FILES['photo']['name']);
@@ -31,14 +30,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (move_uploaded_file($_FILES['photo']['tmp_name'], $photo_path)) {
             $photo = $photo_path;
-            // Delete old photo if it exists and isn't default
+        
             if (!empty($user['photo']) && strpos($user['photo'], 'default_profile.jpg') === false) {
                 @unlink($user['photo']);
             }
         }
     }
 
-    // Update user data
+    
     if (!empty($new_password)) {
         $success = $userModel->updateUserWithPassword($user_id, $name, $email, $phone, $qualification, $photo, $new_password);
     } else {
@@ -49,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['name'] = $name;
         $_SESSION['photo'] = $photo;
         
-        // Determine redirect based on role
+        
         $redirect_page = "dashboard.php";
         switch ($role) {
             case 'team_leader':

@@ -3,19 +3,19 @@ session_start();
 include("../Config/Config.php");
 include("../models/admindashboard-model.php");
 
-// Redirect if admin is not logged in
+
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../index.php");
     exit();
 }
 
-// Initialize model with database connection
+
 $model = new AdminDashboardModel($conn);
 
-// Handle form submissions
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['title']) && isset($_POST['description']) && isset($_POST['assigned_to'])) {
-        // Assign new task
+        
         $success = $model->assignTask( $_POST['title'],
         $_POST['description'],$_POST['assigned_to'],
             $_SESSION['user_id']
