@@ -18,7 +18,7 @@ if (isset($_GET['id'])) {
     $employee = $model->getEmployeeById($_GET['id']);
     if (!$employee) {
         $_SESSION['message'] = 'Employee not found!';
-        header("Location: manage-employees.php");
+        header("Location: ManageEmployees.php");
         exit();
     }
 }

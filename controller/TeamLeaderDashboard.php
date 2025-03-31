@@ -49,7 +49,7 @@ class TeamLeaderController {
         } catch (Exception $e) {
             $_SESSION['error'] = $e->getMessage();
         }
-        header("Location: team-leader-dashboard.php");
+        header("Location: TeamLeaderDashboard.php");
         exit();
     }
 
@@ -67,7 +67,7 @@ class TeamLeaderController {
         } catch (Exception $e) {
             $_SESSION['error'] = $e->getMessage();
         }
-        header("Location: team-leader-dashboard.php");
+        header("Location: TeamLeaderDashboard.php");
         exit();
     }
 
@@ -86,7 +86,7 @@ class TeamLeaderController {
         } catch (Exception $e) {
             $_SESSION['error'] = $e->getMessage();
         }
-        header("Location: team-leader-dashboard.php");
+        header("Location: TeamLeaderDashboard.php");
         exit();
     }
 

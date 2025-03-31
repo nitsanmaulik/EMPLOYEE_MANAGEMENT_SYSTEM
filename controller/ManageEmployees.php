@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         $success = $model->updateEmployee($id, $data);
         $_SESSION['message'] = $success ? 'Employee updated successfully!' : 'Error updating employee.';
-        header("Location: manage-employees.php");
+        header("Location: ManageEmployees.php");
         exit();
     }
 }
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 if (isset($_GET['delete'])) {
     $success = $model->deleteEmployee($_GET['delete']);
     $_SESSION['message'] = $success ? 'Employee deleted successfully!' : 'Error deleting employee.';
-    header("Location: manage-employees.php");
+    header("Location: ManageEmployees.php");
     exit();
 }
 

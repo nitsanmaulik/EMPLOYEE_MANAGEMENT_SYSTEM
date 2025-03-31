@@ -61,11 +61,11 @@ class TaskAdminController {
                 (int)$_POST['assigned_to']
             );
             
-            $dashboard = ($_SESSION['role'] === 'admin') ? 'admin-dashboard.php' : 'team-leader-dashboard.php';
+            $dashboard = ($_SESSION['role'] === 'admin') ? 'AdminDashboard.php' : 'TeamLeaderDashboard.php';
             header("Location: $dashboard?success=Task+Updated");
             exit();
         } catch (Exception $e) {
-            header("Location: update-task-admin.php?id=$task_id&error=" . urlencode($e->getMessage()));
+            header("Location: UpdateTaskAdmin.php?id=$task_id&error=" . urlencode($e->getMessage()));
             exit();
         }
     }

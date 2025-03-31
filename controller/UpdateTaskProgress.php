@@ -52,7 +52,7 @@ try {
     $taskUpdater = new TaskProgressUpdater($conn, $_SESSION['user_id']);
     $taskUpdater->updateTaskStatus($_POST['task_id'], $_POST['status']);
     
-    header("Location: employee-dashboard.php?success=Task+Updated");
+    header("Location: EmployeeDashboard.php?success=Task+Updated");
     exit();
     
 } catch (Exception $e) {

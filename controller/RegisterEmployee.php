@@ -24,11 +24,11 @@ class RegisterEmployeeController {
 
             $this->model->registerEmployee($_POST, $_FILES['photo'] ?? null);
             $_SESSION['success_message'] = "Employee registered successfully!";
-            header('Location: admin-dashboard.php');
+            header('Location: AdminDashboard.php');
             exit();
         } catch (Exception $e) {
             $_SESSION['error_message'] = $e->getMessage();
-            header('Location: admin-dashboard.php'); // Redirect back to form
+            header('Location: AdminDashboard.php'); // Redirect back to form
             exit();
         }
     }

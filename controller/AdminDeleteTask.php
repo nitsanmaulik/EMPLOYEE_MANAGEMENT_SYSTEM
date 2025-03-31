@@ -15,7 +15,7 @@ if (isset($_GET['id'])) {
     $result = $taskModel->deleteTask($task_id);
     
     if ($result) {
-        header('location: ../controller/admin-dashboard.php?success=task_deleted');
+        header('location: ../controller/AdminDashboard.php?success=task_deleted');
         exit();
     } else {
         die("Error deleting task");

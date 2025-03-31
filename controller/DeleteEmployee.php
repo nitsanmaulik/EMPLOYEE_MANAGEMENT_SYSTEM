@@ -30,7 +30,7 @@ if (!isset($_GET['id']) || !ctype_digit($_GET['id'])) {
 // Process Deletion
 $deleter = new EmployeeDeleter($conn);
 if ($deleter->delete($_GET['id'])) {
-    header("Location: manage-employees.php?success=Employee+Deleted");
+    header("Location: ManageEmployees.php?success=Employee+Deleted");
 } else {
     die("Failed to delete employee");
 }

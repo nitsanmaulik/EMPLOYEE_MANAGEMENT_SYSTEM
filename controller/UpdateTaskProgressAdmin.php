@@ -46,7 +46,7 @@ class TaskProgressController {
     }
     
     private function redirectWithSuccess() {
-        header("Location: admin-dashboard.php?success=Task+Updated");
+        header("Location: AdminDashboard.php?success=Task+Updated");
         exit();
     }
     

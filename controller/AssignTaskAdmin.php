@@ -38,7 +38,7 @@ class TaskController {
     }
 
     private function redirect () {
-        $url = $this->role === 'admin' ? "admin-dashboard.php" : "team-leader-dashboard.php";
+        $url = $this->role === 'admin' ? "AdminDashboard.php" : "TeamLeaderDashboard.php";
         header("Location: $url");
         exit();
     }

@@ -52,13 +52,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $redirect_page = "dashboard.php";
         switch ($role) {
             case 'team_leader':
-                $redirect_page = "team-leader-dashboard.php";
+                $redirect_page = "TeamLeaderDashboard.php";
                 break;
             case 'admin':
-                $redirect_page = "admin-dashboard.php";
+                $redirect_page = "AdminDashboard.php";
                 break;
             case 'employee':
-                $redirect_page = "employee-dashboard.php";
+                $redirect_page = "EmployeeDashboard.php";
                 break;
         }
         

@@ -11,7 +11,7 @@
 <body>
     <div class="container mt-5">
         <h2 class="text-center">Login</h2>
-        <form id="loginForm" action="controller/login.php" method="POST">
+        <form id="loginForm" action="controller/Login.php" method="POST">
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>

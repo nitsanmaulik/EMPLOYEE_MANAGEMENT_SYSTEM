@@ -40,11 +40,11 @@
             <button type="submit" class="btn btn-primary w-100">Update Profile</button>
             <a href="<?php 
                 if ($role === 'team_leader') {
-                    echo 'team-leader-dashboard.php';
+                    echo 'TeamLeaderDashboard.php';
                 } elseif ($role === 'admin') {
-                    echo 'admin-dashboard.php';
+                    echo 'AdminDashboard.php';
                 } else {
-                    echo 'employee-dashboard.php';
+                    echo 'EmployeeDashboard.php';
                 }
             ?>" class="btn btn-secondary w-100 mt-2">Cancel</a>
         </form>

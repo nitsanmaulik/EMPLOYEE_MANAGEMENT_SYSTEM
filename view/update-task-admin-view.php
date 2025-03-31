@@ -36,7 +36,7 @@
 
             <button type="submit" class="btn btn-primary w-100">Update Task</button>
             <?php 
-                $dashboard = ($_SESSION['role'] === 'admin') ? 'admin-dashboard.php' : 'team-leader-dashboard.php';
+                $dashboard = ($_SESSION['role'] === 'admin') ? 'AdminDashboard.php' : 'TeamLeaderDashboard.php';
             ?>
             <a href="<?php echo $dashboard; ?>" class="btn btn-secondary w-100 mt-2">Cancel</a>
         </form>

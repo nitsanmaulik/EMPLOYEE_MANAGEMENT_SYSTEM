@@ -90,7 +90,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="d-flex gap-2">
-                                                        <a href="update-task-admin.php?id=<?php echo $task['id']; ?>" 
+                                                        <a href="UpdateTaskAdmin.php?id=<?php echo $task['id']; ?>" 
                                                            class="btn btn-warning btn-sm">Edit</a>
                                                         <form action="TeamLeaderDashboard.php" method="POST" class="d-inline">
                                                             <input type="hidden" name="delete_task" value="<?php echo $task['id']; ?>">
