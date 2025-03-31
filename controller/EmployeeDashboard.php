@@ -23,6 +23,6 @@ $employeeName = $_SESSION['name'];
 
 // Fetch tasks assigned to this employee
 $tasks = $conn->query("SELECT * FROM tasks WHERE assigned_to = $employeeId");
-include ("../view/employee-dashboard-view.php");
+include ("../view/Employee/Dashboard.php");
 ?>
 

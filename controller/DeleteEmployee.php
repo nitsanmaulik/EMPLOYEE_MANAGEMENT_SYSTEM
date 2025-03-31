@@ -5,11 +5,22 @@ require '../Config/Config.php';
 class EmployeeDeleter {
     private $conn;
     
-    public function __construct($conn) {
+    /**
+     * Constructor for EmployeeDeleter class
+     * 
+     * @param mysqli $conn Database connection object
+     */
+    public function __construct(mysqli $conn) {
         $this->conn = $conn;
     }
     
-    public function delete($employee_id) {
+    /**
+     * Deletes an employee from the database
+     * 
+     * @param int $employee_id ID of the employee to delete
+     * @return bool Returns true if deletion was successful, false otherwise
+     */
+    public function delete(int $employee_id): bool {
         $stmt = $this->conn->prepare("DELETE FROM users WHERE id = ?");
         $stmt->bind_param("i", $employee_id);
         return $stmt->execute();
@@ -29,7 +40,7 @@ if (!isset($_GET['id']) || !ctype_digit($_GET['id'])) {
 
 // Process Deletion
 $deleter = new EmployeeDeleter($conn);
-if ($deleter->delete($_GET['id'])) {
+if ($deleter->delete((int)$_GET['id'])) {
     header("Location: ManageEmployees.php?success=Employee+Deleted");
 } else {
     die("Failed to delete employee");

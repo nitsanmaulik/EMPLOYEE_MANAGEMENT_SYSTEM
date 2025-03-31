@@ -56,21 +56,5 @@ class EmployeeDashboardModel {
         return true;
     }
 
-    /**
-     * Retrieves basic details of an employee
-     * @param int $employeeId The ID of the employee
-     * @return array{name: string, photo: string|null}|null Associative array with employee details or null if not found
-     * @throws RuntimeException If database operation fails
-     */
-    public function getEmployeeDetails(int $employeeId): ?array {
-        $stmt = $this->conn->prepare("SELECT name, photo FROM users WHERE id = ?");
-        $stmt->bind_param("i", $employeeId);
-        
-        if (!$stmt->execute()) {
-            throw new RuntimeException("Failed to fetch employee details: " . $stmt->error);
-        }
-        
-        $result = $stmt->get_result();
-        return $result->fetch_assoc() ?: null;
-    }
+    
 }

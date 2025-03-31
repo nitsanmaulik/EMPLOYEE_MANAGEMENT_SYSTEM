@@ -24,5 +24,5 @@ if (isset($_GET['id'])) {
 }
 
 // Include view
-require_once __DIR__ . '/../view/edit-employee-view.php';
+require_once __DIR__ . '/../view/Employee/Dashboard.php.php';
 ?>

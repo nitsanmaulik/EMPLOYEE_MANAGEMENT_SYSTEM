@@ -2,6 +2,7 @@
 session_start();
 require_once __DIR__ . '/../Config/Config.php';
 require_once __DIR__ . '/../models/TeamLeaderDashboardModel.php';
+require_once __DIR__ . '/../models/CommonModel.php';
 
 class TeamLeaderController {
     private $model;
@@ -106,7 +107,7 @@ class TeamLeaderController {
         ];
 
         unset($_SESSION['message'], $_SESSION['error']);
-        require_once __DIR__ . '/../view/teamLeader-dashboard-view.php';
+        require_once __DIR__ . '/../view/TeamLeader/Dashboard.php';
     }
 }
 

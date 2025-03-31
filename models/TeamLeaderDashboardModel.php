@@ -14,22 +14,7 @@ class TeamLeaderDashboardModel {
         $this->conn = $connection;
     }
 
-    /**
-     * Retrieves team leader details
-     * @param int $teamLeaderId ID of the team leader
-     * @return array{name: string, photo: string|null}|null Associative array with team leader details or null if not found
-     * @throws RuntimeException If database operation fails
-     */
-    public function getTeamLeaderDetails(int $teamLeaderId): ?array {
-        $stmt = $this->conn->prepare("SELECT name, photo FROM users WHERE id = ?");
-        $stmt->bind_param("i", $teamLeaderId);
-        
-        if (!$stmt->execute()) {
-            throw new RuntimeException("Failed to fetch team leader details: " . $stmt->error);
-        }
-        
-        return $stmt->get_result()->fetch_assoc() ?: null;
-    }
+    
 
     /**
      * Retrieves all team members (employees)
