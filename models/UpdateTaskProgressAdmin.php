@@ -1,13 +1,28 @@
 <?php
 class UpdateTaskProgressAdmin {
     private $conn;
-    private $allowedStatuses = ['pending', 'in_progress', 'completed'];
+    private array $allowedStatuses = ['pending', 'in_progress', 'completed'];
     
-    public function __construct($conn) {
+    /**
+     * Constructor to initialize the database connection.
+     * 
+     * @param mysqli $conn Database connection object.
+     */
+    public function __construct(mysqli $conn) {
         $this->conn = $conn;
     }
     
-    public function updateTaskStatus($taskId, $status) {
+    /**
+     * Updates the status of a task.
+     * 
+     * @param int $taskId The ID of the task to update.
+     * @param string $status The new status of the task.
+     * 
+     * @throws Exception If the status is invalid or a database error occurs.
+     * 
+     * @return bool Returns true on success.
+     */
+    public function updateTaskStatus(int $taskId, string $status): bool {
         $this->validateStatus($status);
         
         $stmt = $this->conn->prepare("UPDATE tasks SET status = ? WHERE id = ?");
@@ -20,8 +35,17 @@ class UpdateTaskProgressAdmin {
         return true;
     }
     
-    private function validateStatus($status) {
-        if (!in_array($status, $this->allowedStatuses)) {
+    /**
+     * Validates the provided status.
+     * 
+     * @param string $status The status to validate.
+     * 
+     * @throws Exception If the status is not allowed.
+     * 
+     * @return void
+     */
+    private function validateStatus(string $status): void {
+        if (!in_array($status, $this->allowedStatuses, true)) {
             throw new Exception("Invalid status value");
         }
     }

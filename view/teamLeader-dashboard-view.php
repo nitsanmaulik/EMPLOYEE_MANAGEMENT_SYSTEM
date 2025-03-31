@@ -23,7 +23,9 @@
 
     <div class="container mt-4">
         <div class="container mb-3">
-            <h2><img src="../<?php echo $_SESSION['photo'] ?>" alt="profile photo" class="rounded-circle" width="100">
+            <h2><?php if (!empty($_SESSION['photo'])): ?>
+                    <img src="<?php echo htmlspecialchars($_SESSION['photo']); ?>" alt="profile photo" class="rounded-circle" width="100">
+                <?php endif; ?>
             Welcome, <?php echo htmlspecialchars($_SESSION['name']); ?></h2>
         </div>
         <div class="row g-4">
@@ -78,12 +80,18 @@
                                         <?php foreach ($assignedTasks as $task): ?>
                                             <tr>
                                                 <td><?php echo htmlspecialchars($task['title']); ?></td>
-                                                <td><?php echo htmlspecialchars($task['description']); ?></td>
+                                                <td>
+                                                    <span title="<?php echo htmlspecialchars($task['description']); ?>">
+                                                        <?php echo (strlen($task['description']) > 50) 
+                                                            ? htmlspecialchars(substr($task['description'], 0, 50)) . '...' 
+                                                            : htmlspecialchars($task['description']); ?>
+                                                    </span>
+                                                </td>
                                                 <td><?php echo htmlspecialchars($task['employee_name']); ?></td>
                                                 <td>
                                                     <span class="badge rounded-pill bg-<?php 
                                                         echo ($task['status'] == 'completed') ? 'success' : 
-                                                             (($task['status'] == 'in_progress') ? 'warning' : 'secondary'); 
+                                                            (($task['status'] == 'in_progress') ? 'warning' : 'secondary'); 
                                                     ?>">
                                                         <?php echo ucfirst(str_replace('_', ' ', $task['status'])); ?>
                                                     </span>
@@ -91,7 +99,7 @@
                                                 <td>
                                                     <div class="d-flex gap-2">
                                                         <a href="UpdateTaskAdmin.php?id=<?php echo $task['id']; ?>" 
-                                                           class="btn btn-warning btn-sm">Edit</a>
+                                                        class="btn btn-warning btn-sm">Edit</a>
                                                         <form action="TeamLeaderDashboard.php" method="POST" class="d-inline">
                                                             <input type="hidden" name="delete_task" value="<?php echo $task['id']; ?>">
                                                             <button type="submit" class="btn btn-danger btn-sm" 
@@ -104,6 +112,7 @@
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>
+
                                 </table>
                             </div>
                     </div>
@@ -134,7 +143,9 @@
                                 <?php foreach ($myTasks as $task): ?>
                                     <tr>
                                         <td><?php echo htmlspecialchars($task['title']); ?></td>
-                                        <td><?php echo htmlspecialchars($task['description']); ?></td>
+                                        <td><?php echo (strlen($task['description']) > 50) 
+                                                            ? htmlspecialchars(substr($task['description'], 0, 50)) . '...' 
+                                                            : htmlspecialchars($task['description']); ?></td>
                                         <td>
                                             <span class="badge rounded-pill bg-<?php 
                                                 echo ($task['status'] == 'completed') ? 'success' : 

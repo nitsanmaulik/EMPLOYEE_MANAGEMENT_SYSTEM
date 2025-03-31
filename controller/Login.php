@@ -2,6 +2,7 @@
 session_start();
 
 include("../models/LoginModel.php");
+include("../Config/Config.php");
 
 class AuthController {
     private $userModel;
@@ -22,7 +23,7 @@ class AuthController {
                 $this->redirectUser($user['role']);
                 exit();
             } else {
-                header("Location: ../index.php?error=invalid_credentials");
+                echo "<script>alert('put valid credentials!'); window.location.href='../index.php';</script>";
                 exit();
             }
         }

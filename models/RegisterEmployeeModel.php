@@ -2,16 +2,34 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+
+/**
+ * Model class for handling employee registration including database operations,
+ * photo uploads, and sending welcome emails.
+ */
 class RegisterEmployeeModel {
+    /** @var mysqli Database connection object */
     private $conn;
+    
+    /** @var PHPMailer Email service object */
     private $mailer;
 
-    public function __construct($connection) {
+    /**
+     * Constructor - initializes the database connection and mailer
+     * @param mysqli $connection Database connection object
+     * @throws Exception If mailer initialization fails
+     */
+    public function __construct(mysqli $connection) {
         $this->conn = $connection;
         $this->initializeMailer();
     }
 
-    private function initializeMailer() {
+    /**
+     * Initializes PHPMailer with SMTP configuration
+     * @return void
+     * @throws Exception If mailer configuration fails
+     */
+    private function initializeMailer(): void {
         $this->mailer = new PHPMailer(true);
         $this->mailer->isSMTP();
         $this->mailer->Host = 'smtp.gmail.com';
@@ -23,8 +41,20 @@ class RegisterEmployeeModel {
         $this->mailer->SMTPDebug = 0;
     }
 
-    public function registerEmployee($data, $file = null) {
-        //$this->validateRegistrationData($data);
+    /**
+     * Registers a new employee with photo upload and welcome email
+     * @param array $data Employee data including:
+     *               - name: string
+     *               - email: string
+     *               - password: string
+     *               - phone: string
+     *               - qualification: string
+     *               - role: string
+     * @param array|null $file Uploaded file data (from $_FILES)
+     * @return void
+     * @throws Exception If any step in the registration process fails
+     */
+    public function registerEmployee(array $data, ?array $file = null): void {
         $photoPath = $this->handlePhotoUpload($file);
         $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
 
@@ -41,8 +71,13 @@ class RegisterEmployeeModel {
         $this->sendWelcomeEmail($data['email'], $data['name'], $data['password']);
     }
 
-    
-    private function handlePhotoUpload($file) {
+    /**
+     * Handles photo upload and validation
+     * @param array|null $file Uploaded file data
+     * @return string|null Path to uploaded photo or null if no file
+     * @throws Exception If file validation or upload fails
+     */
+    private function handlePhotoUpload(?array $file): ?string {
         if (empty($file['name'])) {
             return null;
         }
@@ -68,7 +103,27 @@ class RegisterEmployeeModel {
         return $targetFile;
     }
 
-    private function insertEmployee($name, $email, $password, $phone, $qualification, $role, $photoPath) {
+    /**
+     * Inserts employee data into the database
+     * @param string $name Employee name
+     * @param string $email Employee email
+     * @param string $password Hashed password
+     * @param string $phone Phone number
+     * @param string $qualification Employee qualification
+     * @param string $role Employee role
+     * @param string|null $photoPath Path to employee photo
+     * @return void
+     * @throws Exception If database operation fails
+     */
+    private function insertEmployee(
+        string $name,
+        string $email,
+        string $password,
+        string $phone,
+        string $qualification,
+        string $role,
+        ?string $photoPath
+    ): void {
         $stmt = $this->conn->prepare("
             INSERT INTO users 
             (name, email, password, phone, qualification, role, photo) 
@@ -81,7 +136,15 @@ class RegisterEmployeeModel {
         }
     }
 
-    private function sendWelcomeEmail($email, $name, $plainPassword) {
+    /**
+     * Sends welcome email with login credentials
+     * @param string $email Recipient email address
+     * @param string $name Recipient name
+     * @param string $plainPassword Plain text password (for initial login)
+     * @return void
+     * @throws Exception If email sending fails
+     */
+    private function sendWelcomeEmail(string $email, string $name, string $plainPassword): void {
         try {
             $this->mailer->setFrom('maulikkikani.nitsan@gmail.com', 'NITSAN');
             $this->mailer->addAddress($email, $name);
@@ -106,4 +169,3 @@ class RegisterEmployeeModel {
         }
     }
 }
-?>

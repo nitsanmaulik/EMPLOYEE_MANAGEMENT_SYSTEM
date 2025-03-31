@@ -38,11 +38,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     
-    if (!empty($new_password)) {
-        $success = $userModel->updateUserWithPassword($user_id, $name, $email, $phone, $qualification, $photo, $new_password);
-    } else {
-        $success = $userModel->updateUserWithoutPassword($user_id, $name, $email, $phone, $qualification, $photo);
-    }
+    $success = $userModel->updateUser($user_id, $name, $email, $phone, $qualification, $photo, !empty($new_password) ? $new_password : null);
+
 
     if ($success) {
         $_SESSION['name'] = $name;

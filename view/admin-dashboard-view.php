@@ -22,7 +22,9 @@
     <div class="container mt-4 mb-5">
         <div class="container mb-5">
             <h3>
-            <img src="<?php echo $_SESSION['photo'] ?>" alt="profile photo" class="rounded-circle" width="100">
+                <?php if (!empty($_SESSION['photo'])): ?>
+                    <img src="<?php echo htmlspecialchars($_SESSION['photo']); ?>" alt="profile photo" class="rounded-circle" width="100">
+                <?php endif; ?>
                 Welcome, <?php echo htmlspecialchars($_SESSION['name']); ?> (admin)
             </h3>
         </div>
@@ -108,71 +110,79 @@
                             <small class="text-danger" id="photoError"></small>
                         </div>
 
-                        <button type="submit" class="btn btn-success w-100">Register Employee</button>
+                        <button type="submit" class="btn btn-success w-100" id = 'registrationbutton'>Register Employee</button>
                     </form>
                 </div>
             </div>
         </div>
 
         <!-- All Assigned Tasks Section -->
-        <div class="mt-5">
-            <h4 class="text-center mb-4">All Assigned Tasks</h4>
-            <div class="table-responsive">
-                <table class="table table-striped table-hover align-middle">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Assigned To</th>
-                            <th>Status</th>
-                            <th>Update Progress</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($tasks as $task): ?>
-                            <tr>
-                                <td><?php echo htmlspecialchars($task['title']); ?></td>
-                                <td><?php echo htmlspecialchars($task['description']); ?></td>
-                                <td><?php echo htmlspecialchars($task['assigned_to']); ?></td>
-                                <td>
-                                    <span class="badge rounded-pill bg-<?php 
-                                        echo ($task['status'] == 'completed') ? 'success' : 
-                                             (($task['status'] == 'in_progress') ? 'warning' : 'secondary'); 
-                                    ?>">
-                                        <?php echo ucfirst(str_replace('_', ' ', $task['status'])); ?>
-                                    </span>
-                                </td>
-                                <td>
-                                    <form action="UpdateTaskProgressAdmin.php" method="POST" class="d-flex">
-                                        <input type="hidden" name="task_id" value="<?php echo $task['id']; ?>">
-                                        <select name="status" class="form-select me-2">
-                                            <option value="pending" <?php echo ($task['status'] == 'pending') ? 'selected' : ''; ?>>Pending</option>
-                                            <option value="in_progress" <?php echo ($task['status'] == 'in_progress') ? 'selected' : ''; ?>>In Progress</option>
-                                            <option value="completed" <?php echo ($task['status'] == 'completed') ? 'selected' : ''; ?>>Completed</option>
-                                        </select>
-                                        <button type="submit" class="btn btn-sm btn-success">Update</button>
-                                    </form>
-                                </td>
-                                <td>
-                                    <div class="d-flex gap-2">
-                                        <a href="UpdateTaskAdmin.php?id=<?php echo $task['id']; ?>" class="btn btn-sm btn-warning">Edit</a>
-                                        <a href="AdminDashboard.php?delete_task=<?php echo $task['id']; ?>" 
-                                           class="btn btn-sm btn-danger" 
-                                           onclick="return confirm('Are you sure you want to delete this task?');">
-                                            Delete
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+    <div class="mt-5">
+    <h4 class="text-center mb-4">All Assigned Tasks</h4>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Assigned To</th>
+                    <th>Status</th>
+                    <th>Update Progress</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($tasks as $task): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($task['title']); ?></td>
+                        <td><?php echo (strlen($task['description']) > 50) 
+                                ? htmlspecialchars(substr($task['description'], 0, 50)) . '...' 
+                                : htmlspecialchars($task['description']); ?></td>
+                        <td><?php echo htmlspecialchars($task['employee_name']); ?></td>
+                        <td>
+                            <span class="badge rounded-pill bg-<?php 
+                                echo ($task['status'] == 'completed') ? 'success' : 
+                                     (($task['status'] == 'in_progress') ? 'warning' : 'secondary'); 
+                            ?>">
+                                <?php 
+                                $displayStatus = $task['status'];
+                                if ($displayStatus == 'in_progress') {
+                                    $displayStatus = 'in progress';
+                                }
+                                echo ucfirst($displayStatus); 
+                                ?>
+                            </span>
+                        </td>
+                        <td>
+                            <form action="UpdateTaskProgressAdmin.php" method="POST" class="d-flex">
+                                <input type="hidden" name="task_id" value="<?php echo $task['id']; ?>">
+                                <select name="status" class="form-select me-2">
+                                    <option value="pending" <?php echo ($task['status'] == 'pending') ? 'selected' : ''; ?>>Pending</option>
+                                    <option value="in_progress" <?php echo ($task['status'] == 'in_progress') ? 'selected' : ''; ?>>In Progress</option>
+                                    <option value="completed" <?php echo ($task['status'] == 'completed') ? 'selected' : ''; ?>>Completed</option>
+                                </select>
+                                <button type="submit" class="btn btn-sm btn-success">Update</button>
+                            </form>
+                        </td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <a href="UpdateTaskAdmin.php?id=<?php echo $task['id']; ?>" class="btn btn-sm btn-warning">Edit</a>
+                                <a href="AdminDashboard.php?delete_task=<?php echo $task['id']; ?>" 
+                                   class="btn btn-sm btn-danger" 
+                                   onclick="return confirm('Are you sure you want to delete this task?');">
+                                    Delete
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
     </div>
 
-    <script src="../Assets/JS/login_validation.js"></script>
+    <script src="../Assets/JS/register_validation.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {

@@ -1,24 +1,22 @@
 <?php
+
 session_start();
 include '../Config/Config.php';
-include '../models/AdminDeleteTaskModel.php';
 
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'team_leader') {
-    header('location:../index.php');
-    exit();
+if(!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'team_leader'){
+    header('location: ../index.php');
 }
 
-if (isset($_GET['id'])) {
+if(isset($_GET['id'])){
     $task_id = $_GET['id'];
-    
-    $taskModel = new AdminDeleteTaskModel($conn);
-    $result = $taskModel->deleteTask($task_id);
-    
-    if ($result) {
+    $stmt = $conn->prepare("DELETE FROM tasks WHERE id = ?");
+    $stmt->bind_param('i', $task_id);
+
+    if($stmt->execute()){
         header('location: ../controller/AdminDashboard.php?success=task_deleted');
         exit();
     } else {
-        die("Error deleting task");
+        die($stmt->error);
     }
 }
 ?>

@@ -1,40 +1,45 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("registerEmployeeForm");
     const registrationbutton = document.getElementById('registrationbutton');
 
-
     const nameInput = document.getElementById("name");
     const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
     const phoneInput = document.getElementById("phone");
     const qualificationInput = document.getElementById("qualification");
-    const passwordInput = document.getElementById("password");
-    const photoInput = document.getElementById("photo");
 
-    // function validateField(input, errorId, regex, errorMessage) {
-    //     const value = input.value.trim();
-    //     if (!regex.test(value)) {
-    //         document.getElementById(errorId).innerText = errorMessage;
-    //         return false;
-    //     } else {
-    //         document.getElementById(errorId).innerText = "";
-    //         return true;
-    //     }
-    // }
+    const nameError = document.getElementById("nameError");
+    const emailError = document.getElementById("emailError");
+    const passwordError = document.getElementById("passwordError");
+    const phoneError = document.getElementById("phoneError");
+    const qualificationError = document.getElementById("qualificationError");
 
     function validateName() {
-        return validateField(nameInput, "nameError", /^[A-Za-z\s]{3,}$/, "Enter a valid name (letters only, min 3 characters).");
+        if (nameInput.value.trim() === "") {
+            nameError.innerText = "Name is required.";
+            return false;
+        }
+        const namePattern = /^[A-Za-z\s]{3,}$/;
+        if (!namePattern.test(nameInput.value.trim())) {
+            nameError.innerText = "Name must contain only letters and at least 3 characters.";
+            return false;
+        }
+        nameError.innerText = "";
+        return true;
     }
 
     function validateEmail() {
-        return validateField(emailInput, "emailError", /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Enter a valid email.");
-    }
-
-    function validatePhone() {
-        return validateField(phoneInput, "phoneError", /^[0-9]{10}$/, "Enter a valid 10-digit phone number.");
-    }
-
-    function validateQualification() {
-        return validateField(qualificationInput, "qualificationError", /^[A-Za-z\s]{2,}$/, "Enter a valid qualification (letters only).");
+        if (emailInput.value.trim() === "") {
+            emailError.innerText = "Email is required.";
+            return false;
+        }
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailPattern.test(emailInput.value.trim())) {
+            emailError.innerText = "Enter a valid email format (e.g., user@example.com).";
+            return false;
+        }
+        emailError.innerText = "";
+        return true;
     }
 
     function validatePassword() {
@@ -51,14 +56,42 @@ document.addEventListener('DOMContentLoaded', function () {
         return true;
     }
 
+    function validatePhone() {
+        if (phoneInput.value.trim() === "") {
+            phoneError.innerText = "Phone number is required.";
+            return false;
+        }
+        const phonePattern = /^[0-9]{10}$/;
+        if (!phonePattern.test(phoneInput.value.trim())) {
+            phoneError.innerText = "Enter a valid 10-digit phone number.";
+            return false;
+        }
+        phoneError.innerText = "";
+        return true;
+    }
+
+    function validateQualification() {
+        if (qualificationInput.value.trim() === "") {
+            qualificationError.innerText = "Qualification is required.";
+            return false;
+        }
+        const qualificationPattern = /^[A-Za-z\s]{2,}$/;
+        if (!qualificationPattern.test(qualificationInput.value.trim())) {
+            qualificationError.innerText = "Enter a valid qualification (letters only, min 2 characters).";
+            return false;
+        }
+        qualificationError.innerText = "";
+        return true;
+    }
+
+    // Add event listeners to trigger validation on input
     nameInput.addEventListener("input", validateName);
     emailInput.addEventListener("input", validateEmail);
+    passwordInput.addEventListener("input", validatePassword);
     phoneInput.addEventListener("input", validatePhone);
     qualificationInput.addEventListener("input", validateQualification);
-    passwordInput.addEventListener("input", validatePassword);
 
-    
-
+    // Form submit event
     form.addEventListener("submit", function (event) {
         if (!validateName() || !validateEmail() || !validatePassword() || !validatePhone() || !validateQualification()) {
             alert("Please fill out all fields correctly before submitting.");
