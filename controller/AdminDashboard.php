@@ -39,5 +39,5 @@ if (isset($_GET['delete_task'])) {
 $users = $model->getAllUsers();
 $tasks = $model->getAllTasks();
 
-include "../view/Admin/Dashboard.php.php";
+include "../view/Admin/Dashboard.php";
 ?>
