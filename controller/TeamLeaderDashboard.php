@@ -4,31 +4,63 @@ require_once __DIR__ . '/../Config/Config.php';
 require_once __DIR__ . '/../models/TeamLeaderDashboardModel.php';
 require_once __DIR__ . '/../models/CommonModel.php';
 
+/**
+ * Controller for handling Team Leader dashboard operations
+ */
 class TeamLeaderController {
+    /** @var TeamLeaderDashboardModel $model The team leader specific model */
     private $model;
+    
+    /** @var CommonModel $commonModel The common model for shared functionality */
+    private $commonModel;
+    
+    /** @var int $teamLeaderId The current team leader's ID */
     private $teamLeaderId;
 
-    public function __construct($model) {
+    /**
+     * Constructor
+     * 
+     * @param TeamLeaderDashboardModel $model Team leader specific model
+     * @param CommonModel $commonModel Common functionality model
+     */
+    public function __construct(TeamLeaderDashboardModel $model, CommonModel $commonModel) {
         $this->model = $model;
+        $this->commonModel = $commonModel;
         $this->checkAuthentication();
-        $this->teamLeaderId = $_SESSION['user_id'];
+        $this->teamLeaderId = (int)$_SESSION['user_id'];
     }
 
-    private function checkAuthentication() {
+    /**
+     * Checks if user is authenticated as team leader
+     * 
+     * @return void
+     * @throws Exception If not authenticated
+     */
+    private function checkAuthentication(): void {
         if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'team_leader') {
             header('Location: ../index.php');
             exit();
         }
     }
 
-    public function handleRequest() {
+    /**
+     * Main request handler
+     * 
+     * @return void
+     */
+    public function handleRequest(): void {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->handlePostRequest();
         }
         $this->displayDashboard();
     }
 
-    private function handlePostRequest() {
+    /**
+     * Handles POST requests
+     * 
+     * @return void
+     */
+    private function handlePostRequest(): void {
         if (isset($_POST['task_id']) && isset($_POST['status'])) {
             $this->updateTaskStatus();
         } elseif (isset($_POST['title']) && isset($_POST['assigned_to'])) {
@@ -38,7 +70,12 @@ class TeamLeaderController {
         }
     }
 
-    private function deleteTask() {
+    /**
+     * Deletes a task
+     * 
+     * @return void
+     */
+    private function deleteTask(): void {
         try {
             $taskId = filter_input(INPUT_POST, 'delete_task', FILTER_VALIDATE_INT);
             if (!$taskId) {
@@ -54,7 +91,12 @@ class TeamLeaderController {
         exit();
     }
 
-    private function updateTaskStatus() {
+    /**
+     * Updates task status
+     * 
+     * @return void
+     */
+    private function updateTaskStatus(): void {
         try {
             $taskId = filter_input(INPUT_POST, 'task_id', FILTER_VALIDATE_INT);
             $status = filter_input(INPUT_POST, 'status', FILTER_SANITIZE_STRING);
@@ -72,7 +114,12 @@ class TeamLeaderController {
         exit();
     }
 
-    private function assignNewTask() {
+    /**
+     * Assigns a new task to a team member
+     * 
+     * @return void
+     */
+    private function assignNewTask(): void {
         try {
             $title = trim($_POST['title']);
             $description = trim($_POST['description']);
@@ -91,8 +138,13 @@ class TeamLeaderController {
         exit();
     }
 
-    private function displayDashboard() {
-        $teamLeader = $this->model->getTeamLeaderDetails($this->teamLeaderId);
+    /**
+     * Displays the dashboard view
+     * 
+     * @return void
+     */
+    private function displayDashboard(): void {
+        $teamLeader = $this->commonModel->getTeamLeaderDetails($this->teamLeaderId);
         $teamMembers = $this->model->getTeamMembers();
         $assignedTasks = $this->model->getAssignedTasks($this->teamLeaderId);
         $myTasks = $this->model->getMyTasks($this->teamLeaderId);
@@ -112,9 +164,17 @@ class TeamLeaderController {
 }
 
 // Instantiate and run the controller
-$model = new TeamLeaderDashboardModel($conn);
-$controller = new TeamLeaderController($model);
-$controller->handleRequest();
-
-$conn->close();
-?>
+try {
+    $model = new TeamLeaderDashboardModel($conn);
+    $commonModel = new CommonModel($conn);
+    $controller = new TeamLeaderController($model, $commonModel);
+    $controller->handleRequest();
+} catch (Exception $e) {
+    // Log error and show user-friendly message
+    error_log("TeamLeaderDashboard error: " . $e->getMessage());
+    $_SESSION['error'] = "An unexpected error occurred. Please try again later.";
+    header("Location: TeamLeaderDashboard.php");
+    exit();
+} finally {
+    $conn->close();
+}
